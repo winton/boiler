@@ -25,7 +25,7 @@ boiler
 
 ## Structure
 
-Boiler finds generator info in the "source" using the following glob patterns:
+Boiler finds generator info in the [source directory](https://github.com/winton/boiler/tree/master/boiler) using the following glob patterns:
 
 | Glob                                                                                | Description                            |
 | ----------------------------------------------------------------------------------- | -------------------------------------- |
@@ -36,6 +36,10 @@ Boiler finds generator info in the "source" using the following glob patterns:
 | [`plopfile.js`](https://github.com/winton/boiler/tree/master/boiler/plopfile.js)    | [Plop](https://plopjs.com) initializer |
 
 See [plop](https://plopjs.com) for more information on actions, prompts, and generators.
+
+## Make your own boiler
+
+Copy the [`plopfile.js`](https://github.com/winton/boiler/tree/master/boiler/plopfile.js) to your own directory and specify the directory in the `--source` option.
 
 ## Development
 
