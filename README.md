@@ -15,16 +15,26 @@ mkdir new-project; cd new-project
 boiler
 ```
 
+## Options
+
+| Option     | Description                               | Default value                                                 |
+| ---------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `--source` | Generator source (boiler directory)       | [boiler](https://github.com/winton/boiler/tree/master/boiler) |
+| `--dest`   | Generator destination (project directory) | `process.cwd()`                                               |
+| `--force`  | Overwrite existing files in destination   | `false`                                                       |
+
 ## Structure
 
-This project uses [plop](https://plopjs.com) under the hood. Most of this terminology comes from that project.
+Boiler finds generator info in the "source" using the following glob patterns:
 
-| Directory                                                                      | Description                   |
-| ------------------------------------------------------------------------------ | ----------------------------- |
-| [`projects`](https://github.com/winton/boiler/tree/master/boiler/projects)     | Groups of generators          |
-| [`generators`](https://github.com/winton/boiler/tree/master/boiler/generators) | Groups of prompts and actions |
-| [`actions`](https://github.com/winton/boiler/tree/master/boiler/actions)       | Steps to perform              |
-| [`prompts`](https://github.com/winton/boiler/tree/master/boiler/prompts)       | Individual user inputs        |
+| Glob                                                                                | Description                   |
+| ----------------------------------------------------------------------------------- | ----------------------------- |
+| [`prompts/*.js`](https://github.com/winton/boiler/tree/master/boiler/prompts)       | User input prompts            |
+| [`actions/*/*.js`](https://github.com/winton/boiler/tree/master/boiler/actions)     | Actions to perform            |
+| [`generators/*.js`](https://github.com/winton/boiler/tree/master/boiler/generators) | Groups of prompts and actions |
+| [`projects/*.js`](https://github.com/winton/boiler/tree/master/boiler/projects)     | Groups of generators          |
+
+See [plop](https://plopjs.com) for more information on actions, prompts, and generators.
 
 ## Development
 

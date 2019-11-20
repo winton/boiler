@@ -6,9 +6,9 @@ const { Boiler } = require("../dist")
 const args = process.argv.slice(2)
 const argv = require("minimist")(args, {
   alias: {
-    b: "boiler",
-    f: "force",
-    r: "root"
+    s: "source",
+    d: "dest",
+    f: "force"
   }
 })
 

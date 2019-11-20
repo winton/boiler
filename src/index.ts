@@ -5,16 +5,16 @@ export class Boiler {
   plop: NodePlopAPI
 
   constructor({
+    source = path.join(__dirname, "../boiler"),
+    dest = process.cwd(),
     force = false,
-    boiler = path.join(__dirname, "../boiler"),
-    root = process.cwd(),
   }: {
+    source?: string
+    dest?: string
     force?: boolean
-    boiler?: string
-    root?: string
   } = {}) {
-    this.plop = nodePlop(path.join(boiler, "plopfile.js"), {
-      destBasePath: root,
+    this.plop = nodePlop(path.join(source, "plopfile.js"), {
+      destBasePath: dest,
       force,
     })
   }
