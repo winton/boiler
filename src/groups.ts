@@ -49,17 +49,17 @@ export class Groups {
   }
 
   retrieve(boilerPath: string): GroupsType {
-    return Object.keys(this.globs).reduce((m, k) => {
+    return Object.keys(this.globs).reduce((memo, group) => {
       const paths = globby.sync(
-        path.join(boilerPath, this.globs[k])
+        path.join(boilerPath, this.globs[group])
       )
 
-      m[k] = paths.reduce(function(m, p) {
+      memo[group] = paths.reduce(function(m, p) {
         const base = path.basename(p, ".js")
         return Object.assign(m, { [base]: require(p) })
       }, {})
 
-      return m
+      return memo
     }, {}) as GroupsType
   }
 

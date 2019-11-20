@@ -1,4 +1,10 @@
-import { Groups, GroupsType, defaultGlobs } from "./groups"
+import {
+  Groups,
+  GroupsType,
+  defaultGlobs,
+  GeneratorType,
+  ProjectType,
+} from "./groups"
 
 export class Plopfile {
   constructor(public plop) {}
@@ -41,47 +47,54 @@ export class Plopfile {
 
   addGenerators(
     groups: GroupsType,
-    generators:
-      | GroupsType["generators"]
-      | GroupsType["projects"]
+    generators: GeneratorType[] | ProjectType[]
   ): void {
-    for (const generator in generators) {
-      const g = generators[generator]
+    for (const generatorName in generators) {
+      const generator = generators[generatorName]
 
-      const prompts = g.prompts.reduce((m, p) => {
-        return m.concat(groups.prompts[p])
-      }, [])
+      const prompts = generator.prompts.reduce(
+        (memo, prompt) => {
+          return memo.concat(groups.prompts[prompt])
+        },
+        []
+      )
 
-      this.plop.setGenerator(g.title, {
-        description: g.description,
+      this.plop.setGenerator(generator.title, {
+        description: generator.description,
         prompts: prompts,
         actions: data => {
-          let actions = []
-
-          if (g.actions) {
-            actions = g.actions.reduce((m, a) => {
-              return m.concat(groups.actions[a])
-            }, [])
-          }
-
-          if (data.generators) {
-            for (const extraGenerator of data.generators) {
-              const eg = groups.generators[extraGenerator]
-
-              actions = eg.actions.reduce((m, a) => {
-                return m.concat(groups.actions[a])
-              }, actions)
-            }
-          }
-
-          actions = actions.concat([
-            { type: "showCommands" },
-          ])
-
-          return actions
+          return this.buildActions(data, generator, groups)
         },
       })
     }
+  }
+
+  buildActions(
+    data: any,
+    generator: GeneratorType | ProjectType,
+    groups: GroupsType
+  ): any[] {
+    let actions = []
+
+    if (generator.actions) {
+      actions = generator.actions.reduce((memo, action) => {
+        return memo.concat(groups.actions[action])
+      }, [])
+    }
+
+    if (data.generators) {
+      for (const extraGenerator of data.generators) {
+        const eg = groups.generators[extraGenerator]
+
+        actions = eg.actions.reduce((memo, action) => {
+          return memo.concat(groups.actions[action])
+        }, actions)
+      }
+    }
+
+    actions = actions.concat([{ type: "showCommands" }])
+
+    return actions
   }
 
   groups(globs?: typeof defaultGlobs): GroupsType {

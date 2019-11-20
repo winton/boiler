@@ -38,7 +38,7 @@ export class Boiler {
   }
 
   async chooseOptionFromList(
-    plopList,
+    generators,
     message
   ): Promise<any> {
     const plop = nodePlop(undefined)
@@ -50,10 +50,10 @@ export class Boiler {
           type: "list",
           name: "generator",
           message: message,
-          choices: plopList.map(function(p) {
+          choices: generators.map(function(generator) {
             return {
-              name: p.name,
-              value: p.name,
+              name: generator.name,
+              value: generator.name,
             }
           }),
         },
