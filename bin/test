@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/../"
+
+if [[ -z "$PRESERVE" ]]; then
+  rm -rf testProject
+  mkdir testProject
+fi
+
+cd testProject && ../bin/boiler

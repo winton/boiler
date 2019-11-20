@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+require("source-map-support/register")
+const { Boiler } = require("../dist")
+
+const args = process.argv.slice(2)
+const argv = require("minimist")(args, {
+  alias: {
+    b: "boiler",
+    f: "force",
+    r: "root"
+  }
+})
+
+new Boiler(argv).run().catch(console.error)

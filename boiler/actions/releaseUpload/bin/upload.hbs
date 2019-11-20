@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/../"
+
+LIBS="$(ls -d dist/mjs/*.mjs)"
+
+for LIB in $LIBS; do
+  npx terser $LIB --compress -m -o $LIB
+done
+
+aws s3 cp \
+  dist/mjs \
+  s3://{{{bucket}}} \
+  --acl public-read-write \
+  --content-type text/javascript \
+  --recursive \
+  --exclude "*.map" \
+  --include "*.mjs"
