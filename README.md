@@ -27,12 +27,13 @@ boiler
 
 Boiler finds generator info in the "source" using the following glob patterns:
 
-| Glob                                                                                | Description                   |
-| ----------------------------------------------------------------------------------- | ----------------------------- |
-| [`prompts/*.js`](https://github.com/winton/boiler/tree/master/boiler/prompts)       | User input prompts            |
-| [`actions/*/*.js`](https://github.com/winton/boiler/tree/master/boiler/actions)     | Actions to perform            |
-| [`generators/*.js`](https://github.com/winton/boiler/tree/master/boiler/generators) | Groups of prompts and actions |
-| [`projects/*.js`](https://github.com/winton/boiler/tree/master/boiler/projects)     | Groups of generators          |
+| Glob                                                                                | Description                            |
+| ----------------------------------------------------------------------------------- | -------------------------------------- |
+| [`prompts/*.js`](https://github.com/winton/boiler/tree/master/boiler/prompts)       | User input prompts                     |
+| [`actions/*/*.js`](https://github.com/winton/boiler/tree/master/boiler/actions)     | Actions to perform                     |
+| [`generators/*.js`](https://github.com/winton/boiler/tree/master/boiler/generators) | Groups of prompts and actions          |
+| [`projects/*.js`](https://github.com/winton/boiler/tree/master/boiler/projects)     | Groups of generators                   |
+| [`plopfile.js`](https://github.com/winton/boiler/tree/master/boiler/plopfile.js)    | [Plop](https://plopjs.com) initializer |
 
 See [plop](https://plopjs.com) for more information on actions, prompts, and generators.
 
