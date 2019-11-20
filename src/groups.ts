@@ -1,13 +1,6 @@
 import globby from "globby"
 import path from "path"
 
-export const defaultGlobs = {
-  actions: "actions/*/*.js",
-  generators: "generators/*.js",
-  projects: "projects/*.js",
-  prompts: "prompts/*.js",
-}
-
 export interface ProjectType {
   title: string
   generators: string[]
@@ -38,20 +31,18 @@ export interface GroupsType {
 }
 
 export class Groups {
-  constructor(public globs = defaultGlobs) {}
+  constructor(public globs: Record<string, string>) {}
 
-  build(
-    boilerPath: string = path.join(__dirname, "../boiler")
-  ): GroupsType {
-    const groups = this.globGroups(boilerPath)
+  build(source: string): GroupsType {
+    const groups = this.globGroups(source)
     this.resolvePrompts(groups)
     return groups
   }
 
-  globGroups(boilerPath: string): GroupsType {
+  globGroups(source: string): GroupsType {
     return Object.keys(this.globs).reduce((memo, group) => {
       const paths = globby.sync(
-        path.join(boilerPath, this.globs[group])
+        path.join(source, this.globs[group])
       )
 
       memo[group] = paths.reduce(function(m, p) {

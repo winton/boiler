@@ -1,9 +1,10 @@
+const path = require("path")
 const { Groups } = require("../../dist/groups")
 
 const { generators, projects } = new Groups({
   generators: "generators/*.js",
   projects: "projects/*.js",
-}).build()
+}).build(path.join(__dirname, "../"))
 
 const choices = Object.keys(generators).reduce(function(
   memo,

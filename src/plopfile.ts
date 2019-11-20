@@ -1,7 +1,6 @@
 import {
   Groups,
   GroupsType,
-  defaultGlobs,
   GeneratorType,
   ProjectType,
 } from "./groups"
@@ -101,7 +100,13 @@ export class Plopfile {
     return actions
   }
 
-  groups(globs?: typeof defaultGlobs): GroupsType {
-    return new Groups().build()
+  groups({
+    globs,
+    source,
+  }: {
+    globs?: Record<string, string>
+    source?: string
+  } = {}): GroupsType {
+    return new Groups(globs).build(source)
   }
 }
