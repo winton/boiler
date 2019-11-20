@@ -2,6 +2,7 @@ module.exports = {
   title: " ∟ 📂 Web components",
   generators: [
     "buildWebComponents",
+    "cloudflareWorkers",
     "eslint",
     "gitInit",
     "ignore",

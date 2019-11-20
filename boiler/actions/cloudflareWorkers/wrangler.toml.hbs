@@ -1,0 +1,13 @@
+type = "webpack"
+zone_id = ""
+account_id = ""
+
+[env.assets]
+name = "{{name}}-assets"
+route = "cdn.{{domain}}/*"
+webpack_config = "cloudflare/webpack.assets.js"
+
+[env.server]
+name = "{{name}}-server"
+route = "{{domain}}/*"
+webpack_config = "cloudflare/webpack.render.js"
