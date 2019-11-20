@@ -63,13 +63,17 @@ export class Plopfile {
         description: generator.description,
         prompts: prompts,
         actions: data => {
-          return this.buildActions(data, generator, groups)
+          return this.generatorActions(
+            data,
+            generator,
+            groups
+          )
         },
       })
     }
   }
 
-  buildActions(
+  generatorActions(
     data: any,
     generator: GeneratorType | ProjectType,
     groups: GroupsType

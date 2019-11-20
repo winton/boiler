@@ -43,12 +43,12 @@ export class Groups {
   build(
     boilerPath: string = path.join(__dirname, "../boiler")
   ): GroupsType {
-    const groups = this.retrieve(boilerPath)
+    const groups = this.globGroups(boilerPath)
     this.resolvePrompts(groups)
     return groups
   }
 
-  retrieve(boilerPath: string): GroupsType {
+  globGroups(boilerPath: string): GroupsType {
     return Object.keys(this.globs).reduce((memo, group) => {
       const paths = globby.sync(
         path.join(boilerPath, this.globs[group])
