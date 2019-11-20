@@ -1,9 +1,9 @@
-import { GroupsType } from "./groups"
+import { Groups, GroupsType, defaultGlobs } from "./groups"
 
 export class Plopfile {
   constructor(public plop) {}
 
-  addActionTypes(): void {
+  addDefaultActionTypes(): void {
     let commands = []
     let packages = []
 
@@ -82,5 +82,9 @@ export class Plopfile {
         },
       })
     }
+  }
+
+  groups(globs?: typeof defaultGlobs): GroupsType {
+    return new Groups().build()
   }
 }

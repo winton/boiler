@@ -2,7 +2,7 @@
   "name": "@fn2/boiler",
   "version": "1.15.0",
   "description": "Boilerplate generator 🥘",
-  "main": "dist/index.js",
+  "main": "dist/plopfile.js",
   "bin": {
     "boiler": "./bin/boiler"
   },
