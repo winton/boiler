@@ -1,7 +1,10 @@
 const globby = require("globby")
 const path = require("path")
 
-const paths = globby.sync(path.join(__dirname, "**/*.hbs"))
+const paths = globby.sync([
+  path.join(__dirname, "**/*.hbs"),
+  path.join(__dirname, "assets/**")
+])
 
 const actions = paths.map(function(p) {
   p = p.replace(__dirname + "/", "")

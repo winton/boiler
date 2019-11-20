@@ -12,6 +12,7 @@ export class Plopfile {
     let commands = []
     let devPackages = []
     let packages = []
+    let scripts = {}
 
     this.plop.setActionType(
       "addCommand",
@@ -33,6 +34,29 @@ export class Plopfile {
         packages = packages.concat(config.packages)
       }
     )
+
+    this.plop.setActionType(
+      "addScripts",
+      (answers, config) => {
+        scripts = Object.assign({}, scripts, config.scripts)
+      }
+    )
+
+    this.plop.setHelper("scripts", () => {
+      const keys = Object.keys(scripts)
+
+      if (keys.length) {
+        const pairs = keys.reduce((memo, script) => {
+          return memo.concat(
+            `"${script}": "${scripts[script]}"`
+          )
+        }, [])
+
+        return ",\n    " + pairs.join(",\n    ")
+      } else {
+        return ""
+      }
+    })
 
     this.plop.setActionType("showCommands", () => {
       if (devPackages.length) {
@@ -108,9 +132,23 @@ export class Plopfile {
       }
     }
 
-    actions = actions.concat([{ type: "showCommands" }])
+    actions = actions.concat([
+      { type: "showCommands", runLast: true },
+    ])
+
+    actions = actions.sort(this.actionSort)
 
     return actions
+  }
+
+  actionSort(a: any, b: any): number {
+    if (a.runLast && !b.runLast) {
+      return 1
+    }
+    if (!a.runLast && b.runLast) {
+      return -1
+    }
+    return 0
   }
 
   groups({

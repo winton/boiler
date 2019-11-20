@@ -13,4 +13,10 @@ module.exports = [
     type: "addCommand",
     command: "chmod +x bin/release",
   },
+  {
+    type: "addScripts",
+    scripts: {
+      "release": "./bin/release",
+    }
+  }
 ]

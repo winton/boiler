@@ -20,4 +20,10 @@ module.exports = [
       "ts-node",
     ],
   },
+  {
+    type: "addScripts",
+    scripts: {
+      "test": "mocha",
+    }
+  }
 ]
