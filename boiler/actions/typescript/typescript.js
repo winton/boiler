@@ -26,7 +26,7 @@ module.exports = [
       "actions/typescript/src/tsconfig.esm.json",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: ["@types/node", "typescript"],
   },
 ]

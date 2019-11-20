@@ -10,12 +10,20 @@ export class Plopfile {
 
   addDefaultActionTypes(): void {
     let commands = []
+    let devPackages = []
     let packages = []
 
     this.plop.setActionType(
       "addCommand",
       (answers, config) => {
         commands = commands.concat(config.command)
+      }
+    )
+
+    this.plop.setActionType(
+      "addDevPackages",
+      (answers, config) => {
+        devPackages = devPackages.concat(config.packages)
       }
     )
 
@@ -27,10 +35,15 @@ export class Plopfile {
     )
 
     this.plop.setActionType("showCommands", () => {
-      if (packages.length) {
+      if (devPackages.length) {
         commands.push(
           "npm i --save-exact --save-dev " +
-            packages.sort().join(" ")
+            devPackages.sort().join(" ")
+        )
+      }
+      if (packages.length) {
+        commands.push(
+          "npm i --save-exact " + packages.sort().join(" ")
         )
       }
       if (commands.length) {

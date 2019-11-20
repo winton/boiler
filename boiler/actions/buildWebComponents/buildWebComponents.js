@@ -11,7 +11,7 @@ module.exports = [
     command: "chmod +x bin/build",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: ["rollup"],
   },
 ]

@@ -12,7 +12,7 @@ module.exports = [
     templateFile: "actions/mocha/test/expect.ts.hbs",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: [
       "@types/mocha",
       "expect",

@@ -1,6 +1,6 @@
 module.exports = [
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: ["husky", "lint-staged", "npm-check-updates"],
   },
   {

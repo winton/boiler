@@ -6,7 +6,7 @@ module.exports = [
     templateFile: "actions/eslint/.eslintrc.json",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: [
       "eslint",
       "@typescript-eslint/eslint-plugin",

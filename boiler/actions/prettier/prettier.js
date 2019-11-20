@@ -6,7 +6,7 @@ module.exports = [
     templateFile: "actions/prettier/.prettierrc",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: [
       "eslint-config-prettier",
       "eslint-plugin-prettier",

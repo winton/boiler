@@ -12,7 +12,7 @@ module.exports = [
     templateFile: "actions/releaseUpload/bin/upload.hbs",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: ["release-it", "semver"],
   },
   {

@@ -6,7 +6,7 @@ module.exports = [
     templateFile: "actions/release/bin/release.hbs",
   },
   {
-    type: "addPackages",
+    type: "addDevPackages",
     packages: ["release-it", "semver"],
   },
   {
