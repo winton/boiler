@@ -10,4 +10,10 @@ module.exports = [
     skipIfExists: true,
     templateFile: "actions/packageJson/package.json.hbs",
   },
+  {
+    type: "addScripts",
+    scripts: {
+      update: "ncu -u"
+    }
+  }
 ]

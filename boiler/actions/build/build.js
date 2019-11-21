@@ -9,4 +9,10 @@ module.exports = [
     type: "addCommand",
     command: "chmod +x bin/build",
   },
+  {
+    type: "addScripts",
+    scripts: {
+      build: "./bin/build",
+    }
+  }
 ]

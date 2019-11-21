@@ -19,4 +19,16 @@ const actions = paths.map(function (p) {
   }
 })
 
-module.exports = actions
+module.exports = actions.concat([
+  {
+    type: "addPackages",
+    packages: [ "@fn2/cors-worker" ],
+  },
+  {
+    type: "addScripts",
+    scripts: {
+      deploy: "npm run release && wrangler publish --env server",
+      "deploy:assets": "wrangler publish --env assets",
+    }
+  }
+])

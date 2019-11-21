@@ -23,7 +23,7 @@ module.exports = [
   {
     type: "addScripts",
     scripts: {
-      "test": "mocha",
+      test: "mocha",
     }
   }
 ]

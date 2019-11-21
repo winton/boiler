@@ -13,4 +13,10 @@ module.exports = [
     type: "addDevPackages",
     packages: ["rollup"],
   },
+  {
+    type: "addScripts",
+    scripts: {
+      build: "./bin/build",
+    }
+  }
 ]

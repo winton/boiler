@@ -52,7 +52,7 @@ export class Plopfile {
           )
         }, [])
 
-        return ",\n    " + pairs.join(",\n    ")
+        return pairs.sort().join(",\n    ")
       } else {
         return ""
       }

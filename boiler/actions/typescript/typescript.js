@@ -29,4 +29,10 @@ module.exports = [
     type: "addDevPackages",
     packages: ["@types/node", "typescript"],
   },
+  {
+    type: "addScripts",
+    scripts: {
+      watch: "ttab 'tsc -b -w'"
+    }
+  }
 ]

@@ -44,3 +44,5 @@ Copy the [`plopfile.js`](https://github.com/winton/boiler/tree/master/boiler/plo
 ## Development
 
 Execute `./bin/test` to test a generator, then check the `testProject` directory for output.
+
+Use `npm link` to execute boiler locally without releasing and installing.

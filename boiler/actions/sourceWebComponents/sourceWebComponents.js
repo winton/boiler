@@ -23,11 +23,10 @@ const actions = paths.map(function(p) {
 module.exports = actions.concat([
   {
     type: "addDevPackages",
-    packages: ["@fn2/dev-server"],
+    packages: ["@fn2/dev-server", "ts-node-dev"],
   }, {
     type: "addPackages",
     packages: [
-      "@fn2/cors-worker",
       "@fn2/loaded",
       "@fn2/logger",
       "@fn2/patch",
@@ -38,5 +37,11 @@ module.exports = actions.concat([
       "globby",
       "undom"
     ],
+  }, {
+    type: "addScripts",
+    scripts: {
+      dev: "ttab 'ts-node-dev --respawn --transpileOnly --notify false ./src/dev'",
+      start: "npm run dev; npm run watch"
+    }
   }
 ])
