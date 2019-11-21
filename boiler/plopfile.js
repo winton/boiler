@@ -1,4 +1,4 @@
-const { Plopfile } = require("../dist/plopfile")
+const { Plopfile } = require("@fn2/boiler")
 
 module.exports = function(plop) {
   const plopfile = new Plopfile(plop)
