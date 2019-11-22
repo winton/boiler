@@ -1,0 +1,27 @@
+import jwt from "jsonwebtoken"
+import crypto from "crypto"
+
+import { setSsmParameter } from "./ssm"
+
+async function token(sub: string): Promise<void> {
+  const date = new Date().valueOf().toString()
+  const random = Math.random().toString()
+
+  const key = crypto
+    .createHash("sha256")
+    .update(date + random)
+    .digest("hex")
+
+  // eslint-disable-next-line
+  console.log(key)
+
+  const response = await setSsmParameter(
+    "privateKey",
+    key
+  )
+
+  // eslint-disable-next-line
+  console.log(response)
+}
+
+token(process.argv[2])

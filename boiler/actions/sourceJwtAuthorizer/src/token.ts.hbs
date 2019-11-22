@@ -1,0 +1,13 @@
+import jwt from "jsonwebtoken"
+
+import { getSsmParameter } from "./ssm"
+
+async function token(sub: string): Promise<void> {
+  const privateKey = await getSsmParameter("privateKey")
+  const token = jwt.sign({ sub }, privateKey)
+
+  // eslint-disable-next-line
+  console.log(token)
+}
+
+token(process.argv[2])
