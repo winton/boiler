@@ -8,6 +8,7 @@ module.exports = {
     "mochaSpec",
     "packageJson",
     "prettier",
+    "release",
     "sourceJwtAuthorizer",
     "typescriptConfig",
   ],

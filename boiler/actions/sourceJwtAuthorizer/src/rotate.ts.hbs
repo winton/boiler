@@ -15,10 +15,7 @@ async function token(sub: string): Promise<void> {
   // eslint-disable-next-line
   console.log(key)
 
-  const response = await setSsmParameter(
-    "privateKey",
-    key
-  )
+  const response = await setSsmParameter("privateKey", key)
 
   // eslint-disable-next-line
   console.log(response)

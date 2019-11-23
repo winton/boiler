@@ -50,7 +50,9 @@ module.exports = actions.concat([
   {
     type: "addScripts",
     scripts: {
+      deploy: "npm run release && npx sls deploy",
       offline: "npx sls offline",
+      rotate: "./bin/rotate",
       token: "./bin/token"
     }
   }
