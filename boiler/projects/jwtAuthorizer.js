@@ -1,6 +1,7 @@
 module.exports = {
   title: " ∟ 📂 JWT authorizer",
   generators: [
+    "build",
     "eslint",
     "gitInit",
     "ignore",
