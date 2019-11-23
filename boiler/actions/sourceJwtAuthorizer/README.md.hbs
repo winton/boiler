@@ -1,6 +1,6 @@
 # {{name}}
 
-JWT API Gateway Lambda Authorizer
+JWT API Gateway Lambda Authorizer 🚥
 
 ## Architecture
 
@@ -45,7 +45,8 @@ functions:
           path: posts/create
           method: post
           authorizer:
-            name: 'Fn::ImportValue': {{lib}}Arn
+            name: {{lib}}
+            arn: 'Fn::ImportValue': {{lib}}Arn
             identitySource: method.request.header.Cookie
             type: request
 ```
