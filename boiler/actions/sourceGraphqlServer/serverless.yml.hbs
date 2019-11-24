@@ -1,0 +1,26 @@
+service: {{name}}
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  graphql:
+    handler: dist/cjs/index.graphql
+    events:
+      - http:
+          path: /graphql
+          method: post
+          cors: true
+          authorizer:
+            name: {{authorizerLib}}
+            arn: 'Fn::ImportValue': {{authorizerLib}}Arn
+            identitySource: method.request.header.Cookie
+            type: request
+      - http:
+          path: /graphql
+          method: get
+          cors: true
