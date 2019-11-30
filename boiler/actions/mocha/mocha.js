@@ -17,7 +17,6 @@ module.exports = [
       "@types/mocha",
       "expect",
       "mocha",
-      "ts-node",
     ],
   },
   {

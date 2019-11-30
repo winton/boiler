@@ -28,7 +28,8 @@ module.exports = actions.concat([
       "aws-sdk",
       "express",
       "serverless",
-      "serverless-offline"
+      "serverless-offline",
+      "ts-node-dev"
     ],
   },
   {
@@ -41,6 +42,7 @@ module.exports = actions.concat([
   {
     type: "addScripts",
     scripts: {
+      dev: "ttab 'ts-node-dev --respawn --transpileOnly --notify false ./src/dev'",
       deploy: "npm run release && npx sls deploy",
       offline: "npx sls offline"
     }

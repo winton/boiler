@@ -1,5 +1,5 @@
 module.exports = {
   title: " ∟ 🌊 GraphQL server",
-  prompts: ["name", "authorizerLib"],
+  prompts: ["name", "authorizerLib", "authorizerVersion"],
   actions: ["sourceGraphqlServer"],
 }

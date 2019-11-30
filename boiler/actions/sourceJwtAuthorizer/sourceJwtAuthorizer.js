@@ -27,6 +27,7 @@ module.exports = actions.concat([
       "@types/cookie",
       "@types/jsonwebtoken",
       "aws-sdk",
+      "fs-extra",
       "serverless",
       "serverless-offline",
       "ts-node"

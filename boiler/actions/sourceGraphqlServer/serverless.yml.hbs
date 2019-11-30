@@ -17,7 +17,8 @@ functions:
           cors: true
           authorizer:
             name: {{authorizerLib}}
-            arn: 'Fn::ImportValue': {{authorizerLib}}Arn
+            arn:
+              'Fn::ImportValue': {{authorizerLib}}-{{authorizerVersion}}
             identitySource: method.request.header.Cookie
             type: request
       - http:

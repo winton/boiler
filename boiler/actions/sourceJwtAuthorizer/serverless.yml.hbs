@@ -29,4 +29,4 @@ resources:
   Outputs:
     {{class}}LambdaFunctionQualifiedArn:
       Export:
-        Name: {{lib}}Arn
+        Name: {{lib}}-${file(serverless.js):version}
