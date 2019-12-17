@@ -2,7 +2,7 @@
   "compilerOptions": {
     "composite": true,
     "module": "commonjs",
-    "outDir": "../dist/cjs",
+    "outDir": "../dist{{#contains "esm" tsBuilds}}/cjs{{/contains}}",
     "rootDir": ".",
     "target": "es5"
   },

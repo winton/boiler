@@ -2,7 +2,7 @@
   "name": "@{{org}}/{{name}}",
   "version": "0.0.1",
   "description": "{{{description}}}",
-  "main": "dist/cjs/index.js",
+  "main": "dist/{{#contains "esm" tsBuilds}}cjs/{{/contains}}index.js",
   "scripts": {
     {{{scripts}}}
   },

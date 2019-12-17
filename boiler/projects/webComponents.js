@@ -12,6 +12,10 @@ module.exports = {
     "prettier",
     "releaseUpload",
     "sourceWebComponents",
-    "typescriptConfig",
+    "tsConfig"
   ],
+  builds: [
+    "cjs",
+    "esm"
+  ]
 }

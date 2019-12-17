@@ -3,11 +3,15 @@
   "extends": "./tsconfig-base.json",
   "files": [],
   "references": [
+{{#contains "cjs" tsBuilds}}
     {
       "path": "./src/tsconfig.cjs.json"
-    },
+    }{{#contains "esm" ../tsBuilds}},{{/contains}}
+{{/contains}}
+{{#contains "esm" tsBuilds}}
     {
       "path": "./src/tsconfig.esm.json"
     }
+{{/contains}}
   ]
 }

@@ -11,6 +11,9 @@ module.exports = {
     "prettier",
     "release",
     "sourceGraphqlServer",
-    "typescriptConfig",
+    "tsConfig"
   ],
+  builds: [
+    "cjs"
+  ]
 }

@@ -25,6 +25,8 @@ function findProject() {
       return p
     }
   }
+
+  return { generators: [] }
 }
 
 module.exports = {

@@ -58,6 +58,16 @@ export class Plopfile {
       }
     })
 
+    this.plop.setHelper(
+      "contains",
+      (elem, list, options) => {
+        if (list.indexOf(elem) > -1) {
+          return options.fn(this)
+        }
+        return options.inverse(this)
+      }
+    )
+
     this.plop.setActionType("showCommands", () => {
       if (devPackages.length) {
         commands.push(
@@ -118,7 +128,8 @@ export class Plopfile {
 
     if (generator.actions) {
       actions = generator.actions.reduce((memo, action) => {
-        return memo.concat(groups.actions[action])
+        const a = groups.actions[action]
+        return memo.concat(Array.isArray(a) ? a : a(data))
       }, [])
     }
 
@@ -127,7 +138,8 @@ export class Plopfile {
         const eg = groups.generators[extraGenerator]
 
         actions = eg.actions.reduce((memo, action) => {
-          return memo.concat(groups.actions[action])
+          const a = groups.actions[action]
+          return memo.concat(Array.isArray(a) ? a : a(data))
         }, actions)
       }
     }

@@ -11,6 +11,9 @@ module.exports = {
     "prettier",
     "release",
     "sourceJwtAuthorizer",
-    "typescriptConfig",
+    "tsConfig"
   ],
+  builds: [
+    "cjs"
+  ]
 }
