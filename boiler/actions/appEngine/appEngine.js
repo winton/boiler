@@ -11,4 +11,10 @@ module.exports = [
     skipIfExists: true,
     templateFile: "actions/appEngine/Dockerfile",
   },
+  {
+    type: "addScripts",
+    scripts: {
+      deploy: "npm run build; gcloud app deploy --verbosity=info"
+    }
+  }
 ]
