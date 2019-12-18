@@ -4,12 +4,19 @@ import pino from "pino"
 export class {{class}} {
   log = pino()
   server: http.Server
+  shutdown = false
 
   constructor() {
     this.server = http.createServer((req, res) => {
-      if (req.url === "/ok") {
-        return res.end("ok")
+      if (this.shutdown) {
+        res.statusCode = 503
+      } else if (req.url === "/ok") {
+        res.statusCode = 200
+      } else {
+        res.statusCode = 404
       }
+      res.statusMessage = http.STATUS_CODES[res.statusCode]
+      return res.end()
     })
 
     const handler = this.shutdownHandler.bind(this)
@@ -17,11 +24,14 @@ export class {{class}} {
     process.once("uncaughtException", handler)
     process.once("unhandledRejection", handler)
     process.once("SIGINT", handler)
+    process.once("SIGTERM", handler)
   }
 
   shutdownHandler(signalOrError: string | Error): void {
+    this.shutdown = true
+
     if (typeof signalOrError === "string") {
-      this.log.info("Received signal:", signalOrError)
+      this.log.info(`Received signal: ${signalOrError}`)
     } else if (signalOrError) {
       this.log.error(signalOrError)
     }

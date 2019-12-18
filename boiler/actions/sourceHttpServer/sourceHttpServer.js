@@ -13,7 +13,7 @@ module.exports = [
   },
   {
     type: "addDevPackages",
-    packages: ["ts-node-dev"],
+    packages: ["@types/pino", "ts-node-dev"],
   },
   {
     type: "addPackages",
