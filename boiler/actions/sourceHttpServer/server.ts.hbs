@@ -1,0 +1,9 @@
+import { {{class}} } from "."
+
+const PORT = process.env.PORT || 3000
+
+const { server, log } = new {{class}}()
+
+server.listen(PORT, (): void => {
+  log.info(`HTTP server started on port ${PORT}`)
+})

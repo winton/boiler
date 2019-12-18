@@ -1,0 +1,37 @@
+import http from "http"
+import pino from "pino"
+
+export class {{class}} {
+  log = pino()
+  server: http.Server
+
+  constructor() {
+    this.server = http.createServer((req, res) => {
+      if (req.url === "/ok") {
+        return res.end("ok")
+      }
+    })
+
+    const handler = this.shutdownHandler.bind(this)
+
+    process.once("uncaughtException", handler)
+    process.once("unhandledRejection", handler)
+    process.once("SIGINT", handler)
+  }
+
+  shutdownHandler(signalOrError: string | Error): void {
+    if (typeof signalOrError === "string") {
+      this.log.info("Received signal:", signalOrError)
+    } else if (signalOrError) {
+      this.log.error(signalOrError)
+    }
+
+    this.server.close(err => {
+      if (err) {
+        this.log.error(err)
+      }
+    })
+
+    process.exit()
+  }
+}
