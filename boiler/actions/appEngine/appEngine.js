@@ -5,4 +5,10 @@ module.exports = [
     skipIfExists: true,
     templateFile: "actions/appEngine/app.yaml",
   },
+  {
+    type: "add",
+    path: "Dockerfile",
+    skipIfExists: true,
+    templateFile: "actions/appEngine/Dockerfile",
+  },
 ]
