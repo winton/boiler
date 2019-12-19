@@ -14,7 +14,7 @@ module.exports = [
   {
     type: "addScripts",
     scripts: {
-      deploy: "npm run build; gcloud app deploy --verbosity=info"
+      deploy: "npm run release && gcloud app deploy --verbosity=info"
     }
   }
 ]
