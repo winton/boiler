@@ -3,6 +3,6 @@ import { {{table}} } from "./{{table}}"
 
 export class {{class}} {
   {{table}}(): Record<string, string>[] {
-    return GenerateSchema.schema({{table}})
+    return GenerateSchema.bigquery({{table}})
   }
 }
