@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/../"
+
+rm -rf dist
+tsc -b
+
+./bin/schema {{table}} > ./dist/{{table}}.json

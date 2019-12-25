@@ -1,0 +1,8 @@
+import GenerateSchema from "generate-schema"
+import { {{table}} } from "./{{table}}"
+
+export class {{class}} {
+  {{table}}(): Record<string, string>[] {
+    return GenerateSchema.schema({{table}})
+  }
+}

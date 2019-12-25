@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const { {{class}} } = require("../dist")
+console.log(
+  JSON.stringify(
+    new {{class}}()[process.argv[2]](),
+    null,
+    2
+  )
+)

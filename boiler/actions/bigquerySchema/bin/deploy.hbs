@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/../"
+
+./bin/build
+
+if [ "$1" = "mk" ]; then
+  bq mk --schema ./dist/{{table}}.json --time_partitioning_type=DAY $2.{{table}}
+elif [ "$1" = "update" ]; then
+  bq update --schema ./dist/{{table}}.json $2.{{table}}
+else
+  echo "Needs format: npm run deploy -- mk|update [dataset]"
+fi
