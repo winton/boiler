@@ -30,6 +30,12 @@ module.exports = [
     templateFile: "actions/bigquerySchema/src/table.hbs",
   },
   {
+    type: "add",
+    path: "README.md",
+    skipIfExists: true,
+    templateFile: "actions/bigquerySchema/README.hbs",
+  },
+  {
     type: "addCommand",
     command: "chmod +x bin/build",
   },
