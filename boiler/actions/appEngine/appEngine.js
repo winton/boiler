@@ -3,7 +3,7 @@ module.exports = [
     type: "add",
     path: "app.yaml",
     skipIfExists: true,
-    templateFile: "actions/appEngine/app.yaml",
+    templateFile: "actions/appEngine/app.hbs",
   },
   {
     type: "add",

@@ -1,5 +1,5 @@
 module.exports = {
   title: "⛅ Google App Engine",
-  prompts: [],
+  prompts: ["name"],
   actions: ["appEngine"],
 }
