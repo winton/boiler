@@ -8,7 +8,5 @@ export class OkRoute {
     return req.url === "/ok"
   }
 
-  async route(req: http.IncomingMessage): Promise<any> {
-    return [200]
-  }
+  async route(req: http.IncomingMessage): Promise<void> {}
 }
