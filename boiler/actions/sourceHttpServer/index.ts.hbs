@@ -13,12 +13,12 @@ import { BigQueryRoute } from "./routes/bigquery"
 import { OkRoute } from "./routes/ok"
 
 // ✋ Configure routes
-const routes = [BigQueryRoute, OkRoute]
+const ROUTES = [BigQueryRoute, OkRoute]
 
 {{#contains "bigquery" routes}}
 // ✋ Configure BigQuery
-const dataset = "datasetName"
-const table = "tableName"
+const DATASET = "datasetName"
+const TABLE = "tableName"
 
 {{/contains}}
 interface Route {
@@ -42,13 +42,13 @@ export class {{class}} {
     if (process.env.GOOGLE_CLOUD_PROJECT) {
       this.buffer = new BigQueryBuffer(
         new BigQuery(),
-        dataset,
-        table
+        DATASET,
+        TABLE
       )
     }
 
 {{/contains}}
-    this.routes = routes.map(R => {
+    this.routes = ROUTES.map(R => {
       return new R(this.log{{#contains "bigquery" routes}}, this.buffer{{/contains}})
     })
 
@@ -114,7 +114,7 @@ export class {{class}} {
     this.shutdown = true
 
     if (typeof signalOrError === "string") {
-      this.log.info(`Received signal: ${signalOrError}`)
+      this.log.info({ signal: signalOrError })
     } else if (signalOrError) {
       this.log.error(signalOrError)
     }
