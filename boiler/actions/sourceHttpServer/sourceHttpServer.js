@@ -7,7 +7,7 @@ module.exports = (data) => {
       templateFile: `actions/sourceHttpServer/routes/${route}.ts.hbs`,
     }
   })
-  
+
   return routes.concat([
     {
       type: "add",
@@ -33,7 +33,11 @@ module.exports = (data) => {
     },
     {
       type: "addPackages",
-      packages: ["pino"],
+      packages: ["pino"].concat(
+        data.routes.includes("bigquery") ?
+          ["@google-cloud/bigquery", "bigquery-buffer"] :
+          []
+      ),
     },
     {
       type: "addScripts",

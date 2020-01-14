@@ -1,8 +1,10 @@
 import http, { IncomingMessage, ServerResponse } from "http"
 import { performance } from "perf_hooks"
 
+{{#contains "bigquery" routes}}
 import { BigQuery } from "@google-cloud/bigquery"
 import { BigQueryBuffer } from "bigquery-buffer"
+{{/contains}}
 import pino from "pino"
 
 {{#contains "bigquery" routes}}
