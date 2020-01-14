@@ -44,7 +44,7 @@ export class {{class}} {
     if (this.shutdown) {
       status = 503
     } else {
-      for (const route of this.routes) {
+      for (const route of routes) {
         if (route.match(req)) {
           ;[status, body] = await route
             .route(req)
