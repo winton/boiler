@@ -2,8 +2,6 @@ import http from "http"
 import pino from "pino"
 
 export class OkRoute {
-  constructor(private log: pino.Logger) {}
-
   match(req: http.IncomingMessage): boolean {
     return req.url === "/ok"
   }
