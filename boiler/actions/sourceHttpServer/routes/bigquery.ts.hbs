@@ -20,7 +20,7 @@ export class BigQueryRoute {
     if (this.buffer) {
       await this.buffer.push(query)
     } else {
-      this.log.info(query)
+      this.log.info({ devModeBufferPush: query })
     }
 
     return [200]
