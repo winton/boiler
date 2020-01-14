@@ -68,6 +68,16 @@ export class Plopfile {
       }
     )
 
+    this.plop.setHelper(
+      "excludes",
+      (elem, list, options) => {
+        if (list.indexOf(elem) === -1) {
+          return options.fn(this)
+        }
+        return options.inverse(this)
+      }
+    )
+
     this.plop.setActionType("showCommands", () => {
       if (devPackages.length) {
         commands.push(

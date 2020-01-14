@@ -1,5 +1,5 @@
 module.exports = {
   title: " ∟ 🌊 HTTP server",
-  prompts: ["class"],
+  prompts: ["class", "routes"],
   actions: ["sourceHttpServer"],
 }

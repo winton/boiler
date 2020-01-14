@@ -1,0 +1,26 @@
+import http from "http"
+import url from "url"
+
+import { BigQueryBuffer } from "bigquery-buffer"
+import pino from "pino"
+
+export class BigQueryRoute {
+  constructor(
+    private buffer: BigQueryBuffer,
+    private log: pino.Logger
+  ) {}
+
+  match(req: http.IncomingMessage): boolean {
+    return req.url.startsWith("/event.gif?")
+  }
+
+  async route(req: http.IncomingMessage): Promise<any> {
+    const { query } = url.parse(req.url, true)
+
+    if (this.buffer) {
+      await this.buffer.push(query)
+    } else {
+      this.log.info(query)
+    }
+  }
+}
