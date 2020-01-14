@@ -84,11 +84,13 @@ export class {{class}} {
     res.statusMessage =
       body || http.STATUS_CODES[res.statusCode]
 
-    this.log.info(
-      req.url,
-      res.statusCode,
-      (performance.now() - now).toFixed(3) + "ms"
-    )
+    const time = performance.now() - now
+
+    this.log.info({
+      url: req.url,
+      status: res.statusCode,
+      time: Math.round(time * 1000) / 1000,
+    })
 
     res.end()
   }
