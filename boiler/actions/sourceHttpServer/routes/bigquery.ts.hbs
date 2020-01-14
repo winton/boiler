@@ -14,7 +14,10 @@ export class BigQueryRoute {
     return req.url.startsWith("/bq.gif?")
   }
 
-  async route(req: http.IncomingMessage): Promise<any> {
+  async route(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<void> {
     const { query } = url.parse(req.url, true)
 
     if (this.buffer) {
@@ -23,6 +26,10 @@ export class BigQueryRoute {
       this.log.info({ "DEV MODE BUFFER PUSH": query })
     }
 
-    return [200]
+    res.writeHead(204, {
+      "Cache-Control": "private, no-cache, no-store",
+      "Content-Length": 0,
+      "Content-Type": "image/gif",
+    })
   }
 }

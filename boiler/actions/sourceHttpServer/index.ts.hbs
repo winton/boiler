@@ -24,8 +24,9 @@ const TABLE = "tableName"
 interface Route {
   match: (req: http.IncomingMessage) => boolean
   route: (
-    req: http.IncomingMessage
-  ) => Promise<[number, string]>
+    req: http.IncomingMessage,
+    res: ServerResponse
+  ) => Promise<void>
 }
 
 export class {{class}} {
@@ -69,45 +70,44 @@ export class {{class}} {
     res: ServerResponse
   ): Promise<void> {
     const now = performance.now()
-    
-    let body: string
+
     let status: number
 
     if (this.shutdown) {
       status = 503
     } else {
-      ;[status, body] = await this.route(req)
+      status = await this.route(req, res)
     }
 
     res.statusCode = status
-
-    res.statusMessage =
-      body || http.STATUS_CODES[res.statusCode]
+    res.statusMessage = http.STATUS_CODES[res.statusCode]
 
     const time = performance.now() - now
 
     this.log.info({
       url: req.url,
       status: res.statusCode,
-      time: Math.round(time * 1000) / 1000,
+      ms: Math.round(time * 1000) / 1000,
     })
 
     res.end()
   }
 
   async route(
-    req: IncomingMessage
-  ): Promise<[number, string] | [number]> {
+    req: IncomingMessage,
+    res: ServerResponse
+  ): Promise<number> {
     for (const route of this.routes) {
       if (route.match(req)) {
-        return await route.route(req).catch(e => {
+        await route.route(req, res).catch(e => {
           this.log.error(e)
-          return [500]
+          return 500
         })
+        return 200
       }
     }
 
-    return [404]
+    return 404
   }
 
   shutdownHandler(signalOrError: string | Error): void {
