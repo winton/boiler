@@ -1,8 +1,21 @@
 import GenerateSchema from "generate-schema"
-import { {{table}} } from "./{{table}}"
+import * as {{table}} from "./{{table}}"
+
+type Column = Record<string, string>
 
 export class {{class}} {
-  {{table}}(): Record<string, string>[] {
-    return GenerateSchema.bigquery({{table}})
+  {{table}}(): Column[] {
+    return GenerateSchema.bigquery({{table}}.columns).map(
+      this.mapRequired({{table}}.required)
+    )
+  }
+
+  mapRequired(required: string[]) {
+    return (col: Column): Column => {
+      if (required.includes(col["name"])) {
+        col["mode"] = "REQUIRED"
+      }
+      return col
+    }
   }
 }
