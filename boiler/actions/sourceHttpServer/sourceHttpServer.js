@@ -12,6 +12,12 @@ module.exports = [
     templateFile: "actions/sourceHttpServer/server.ts.hbs",
   },
   {
+    type: "add",
+    path: "src/routes/ok.ts",
+    skipIfExists: true,
+    templateFile: "actions/sourceHttpServer/ok.ts.hbs",
+  },
+  {
     type: "addDevPackages",
     packages: ["@types/pino", "ts-node-dev"],
   },
