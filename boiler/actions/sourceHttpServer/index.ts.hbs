@@ -13,7 +13,7 @@ import { BigQueryRoute } from "./routes/bigquery"
 import { OkRoute } from "./routes/ok"
 
 // ✋ Configure routes
-const routes = { BigQueryRoute, OkRoute }
+const routes = [BigQueryRoute, OkRoute]
 
 {{#contains "bigquery" routes}}
 // ✋ Configure BigQuery
@@ -33,6 +33,7 @@ export class {{class}} {
   buffer: BigQueryBuffer
 {{/contains}}
   log = pino()
+  routes: Route[]
   server: http.Server
   shutdown = false
 
@@ -47,6 +48,10 @@ export class {{class}} {
     }
 
 {{/contains}}
+    this.routes = routes.map(R => {
+      return new R(this.log{{#contains "bigquery" routes}}, this.buffer{{/contains}})
+    })
+    
     this.server = http.createServer(
       this.httpListener.bind(this)
     )
@@ -64,8 +69,9 @@ export class {{class}} {
     res: ServerResponse
   ): Promise<void> {
     const now = performance.now()
+    
     let body: string
-    let status = 404
+    let status: number
 
     if (this.shutdown) {
       status = 503
@@ -90,14 +96,7 @@ export class {{class}} {
   async route(
     req: IncomingMessage
   ): Promise<[number, string] | [number]> {
-    for (const name in routes) {
-      const route: Route = new routes[name](
-        this.log,
-{{#contains "bigquery" routes}}
-        this.buffer
-{{/contains}}
-      )
-
+    for (const route of this.routes) {
       if (route.match(req)) {
         return await route.route(req).catch(e => {
           this.log.error(e)
@@ -105,6 +104,8 @@ export class {{class}} {
         })
       }
     }
+
+    return [404]
   }
 
   shutdownHandler(signalOrError: string | Error): void {

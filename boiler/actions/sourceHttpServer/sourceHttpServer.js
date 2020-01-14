@@ -25,7 +25,7 @@ module.exports = (data) => {
       type: "add",
       path: "src/routes/ok.ts",
       skipIfExists: true,
-      templateFile: "actions/sourceHttpServer/ok.ts.hbs",
+      templateFile: "actions/sourceHttpServer/routes/ok.ts.hbs",
     },
     {
       type: "addDevPackages",

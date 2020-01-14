@@ -6,12 +6,12 @@ import pino from "pino"
 
 export class BigQueryRoute {
   constructor(
-    private buffer: BigQueryBuffer,
-    private log: pino.Logger
+    private log: pino.Logger,
+    private buffer: BigQueryBuffer
   ) {}
 
   match(req: http.IncomingMessage): boolean {
-    return req.url.startsWith("/event.gif?")
+    return req.url.startsWith("/bq.gif?")
   }
 
   async route(req: http.IncomingMessage): Promise<any> {
