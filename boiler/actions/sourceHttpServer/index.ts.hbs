@@ -51,7 +51,7 @@ export class {{class}} {
     this.routes = routes.map(R => {
       return new R(this.log{{#contains "bigquery" routes}}, this.buffer{{/contains}})
     })
-    
+
     this.server = http.createServer(
       this.httpListener.bind(this)
     )
