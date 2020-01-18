@@ -3,16 +3,22 @@ import {
   KinesisStreamRecord,
 } from "aws-lambda"
 
-export function {{lib}}(
+export class {{class}} {
+  handler(event: KinesisStreamEvent): void {
+    event.Records.forEach((record: KinesisStreamRecord) => {
+      const payload = Buffer.from(
+        record.kinesis.data,
+        "base64"
+      ).toString("ascii")
+
+      // eslint-disable-next-line no-console
+      console.log("Decoded payload:", payload)
+    })
+  }
+}
+
+export function {{name}}(
   event: KinesisStreamEvent
 ): void {
-  event.Records.forEach((record: KinesisStreamRecord) => {
-    const payload = Buffer.from(
-      record.kinesis.data,
-      "base64"
-    ).toString("ascii")
-
-    // eslint-disable-next-line no-console
-    console.log("Decoded payload:", payload)
-  })
+  new {{class}}().handler(event)
 }
