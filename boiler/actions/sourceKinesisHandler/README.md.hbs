@@ -1,0 +1,41 @@
+# {{name}}
+
+Kinesis handler lambda 🎟️
+
+## Setup
+
+Create a kinesis data stream:
+
+```bash
+aws kinesis create-stream \
+  --stream-name myStream \
+  --shard-count 3
+```
+
+Update `serverless.yml` with the ARN of your stream.
+
+## Deploy
+
+Deploy to the `dev` stage:
+
+```bash
+npm run deploy
+```
+
+Deploy to the `prod` stage:
+
+```bash
+npm run deploy -- --stage=prod
+```
+
+## Build your own project
+
+Generate this project with your own naming by running [boiler](https://github.com/winton/boiler):
+
+```bash
+npm i -g @fn2/boiler
+mkdir my-project; cd my-project
+boiler
+```
+
+Then select "Kinesis handler" under "New project".

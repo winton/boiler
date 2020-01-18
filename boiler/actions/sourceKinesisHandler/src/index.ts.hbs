@@ -1,0 +1,15 @@
+import {
+  KinesisStreamEvent,
+  KinesisStreamRecord
+} from "aws-lambda"
+
+export function {{lib}}(event: KinesisStreamEvent) {
+  event.Records.forEach((record: KinesisStreamRecord) => {
+    const payload = Buffer.from(
+      record.kinesis.data,
+      "base64"
+    ).toString("ascii")
+    
+    console.log("Decoded payload:", payload)
+  })
+}

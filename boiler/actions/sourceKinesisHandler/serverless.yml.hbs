@@ -1,0 +1,17 @@
+service: {{name}}
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  kinesisHandler:
+    handler: dist/index.{{lib}}
+    events:
+      - stream:
+        arn: arn:aws:kinesis:REGION:ACCOUNTID:stream/STREAM
+        batchSize: 100
+        startingPosition: LATEST
