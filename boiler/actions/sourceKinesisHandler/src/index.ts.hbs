@@ -16,6 +16,6 @@ export class {{class}} {
 
 export function {{name}}(
   event: KinesisStreamEvent
-): void {
-  new {{class}}().handler(event)
+): Promise<void> {
+  return new {{class}}().handler(event)
 }
