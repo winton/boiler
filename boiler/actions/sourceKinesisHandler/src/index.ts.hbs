@@ -1,21 +1,83 @@
-import { KinesisStreamEvent } from "aws-lambda"
+import { request } from "https"
+import url from "url"
+
+import {
+  KinesisStreamEvent,
+  KinesisStreamRecord,
+} from "aws-lambda"
+
+import pino from "pino"
 
 export class {{class}} {
-  async handler(event: KinesisStreamEvent): Promise<void> {
-    for (const record of event.Records) {
-      const payload = Buffer.from(
-        record.kinesis.data,
-        "base64"
-      ).toString("ascii")
+  log = pino()
 
-      // eslint-disable-next-line no-console
-      console.log("Decoded payload:", payload)
+  async handler(event: KinesisStreamEvent): Promise<any[]> {
+    const promises = []
+
+    for (const record of event.Records) {
+      const payload = this.kinesisRecordToPayload(record)
+      const query = this.payloadToQuery(payload)
+
+      promises.push(this.request(query))
     }
+
+    return Promise.all(promises)
+  }
+
+  kinesisRecordToPayload(
+    record: KinesisStreamRecord
+  ): Record<string, any> {
+    return JSON.parse(
+      Buffer.from(record.kinesis.data, "base64").toString(
+        "ascii"
+      )
+    )
+  }
+
+  payloadToQuery(payload: Record<string, any>): string {
+    return Object.keys(payload)
+      .map(
+        key =>
+          `${this.camel(key)}=${encodeURIComponent(
+            JSON.stringify(payload[key])
+          )}`
+      )
+      .join("&")
+  }
+
+  camel(str: string): string {
+    return str.replace(/[_-]([a-z])/g, function(g) {
+      return g[1].toUpperCase()
+    })
+  }
+
+  async request(query: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const { hostname, path } = url.parse(
+        "https://" + process.env.{{lib}}Url
+      )
+
+      const req = request(
+        {
+          host: hostname,
+          path: path + "?" + query,
+          port: 443,
+          method: "GET",
+        },
+        () => resolve()
+      )
+
+      req.on("error", e => reject(e.message))
+      req.end()
+    })
   }
 }
 
-export function {{name}}(
+export async function {{name}}(
   event: KinesisStreamEvent
-): Promise<void> {
-  return new {{class}}().handler(event)
+): Promise<void | any[]> {
+  return new {{class}}().handler(event).catch(e => {
+    this.log.error(e)
+    throw e
+  })
 }

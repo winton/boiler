@@ -2,6 +2,14 @@ service: {{name}}
 
 plugins:
   - serverless-offline
+  
+custom:
+  {{lib}}Arn:
+    prod: "REGION:ACCOUNTID:stream/STREAM"
+    dev: "REGION:ACCOUNTID:stream/STREAM"
+  {{lib}}Url:
+    prod: "{{name}}.appspot.com/{{lib}}"
+    dev: "{{name}}.appspot.com/{{lib}}"
 
 provider:
   name: aws
@@ -10,8 +18,11 @@ provider:
 functions:
   kinesisHandler:
     handler: dist/index.{{lib}}
+    environment:
+      createEmailEventUrl: ${self:custom.createEmailEventUrl.${self:provider.stage}}
     events:
       - stream:
-        arn: arn:aws:kinesis:REGION:ACCOUNTID:stream/STREAM
-        batchSize: 100
-        startingPosition: LATEST
+          arn: arn:aws:kinesis:${self:custom.createEmailEventArn.${self:provider.stage}}
+          batchSize: 10
+          startingPosition: LATEST
+          parallelizationFactor: 10

@@ -61,7 +61,7 @@ export class Plopfile {
     this.plop.setHelper(
       "contains",
       (elem, list, options) => {
-        if (list.indexOf(elem) > -1) {
+        if (list && list.indexOf(elem) > -1) {
           return options.fn(this)
         }
         return options.inverse(this)
@@ -71,7 +71,7 @@ export class Plopfile {
     this.plop.setHelper(
       "excludes",
       (elem, list, options) => {
-        if (list.indexOf(elem) === -1) {
+        if (list && list.indexOf(elem) === -1) {
           return options.fn(this)
         }
         return options.inverse(this)
