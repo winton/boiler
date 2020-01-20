@@ -42,9 +42,9 @@ module.exports = actions.concat([
   {
     type: "addScripts",
     scripts: {
-      dev: "ttab 'ts-node-dev --respawn --transpileOnly --notify false ./src/dev'",
       deploy: "npm run release && npx sls deploy",
-      offline: "npx sls offline"
+      offline: "npx sls offline",
+      start: "ts-node-dev --respawn --transpileOnly --notify false ./src/dev"
     }
   }
 ])

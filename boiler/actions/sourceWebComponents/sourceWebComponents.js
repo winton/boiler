@@ -40,8 +40,7 @@ module.exports = actions.concat([
   }, {
     type: "addScripts",
     scripts: {
-      dev: "ttab 'npx ts-node-dev --respawn --transpileOnly --notify false ./src/dev'",
-      start: "npm run dev; npm run watch"
+      start: "npx ts-node-dev --respawn --transpileOnly --notify false ./src/dev"
     }
   }
 ])

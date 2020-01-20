@@ -28,7 +28,7 @@ module.exports = actions.concat([
   {
     type: "addScripts",
     scripts: {
-      watch: "ttab 'tsc -b -w'"
+      watch: "tsc -b -w"
     }
   }
 ])
