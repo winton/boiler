@@ -4,8 +4,8 @@ service: {{name}}
 
 {{#contains "bigquery" routes}}
 env_variables:
-  BigQueryRouteDataset: "stageDatasetName"
-  BigQueryRouteTable: "stageTableName"
+  BigQueryRouteDataset: "prodDatasetName"
+  BigQueryRouteTable: "prodTableName"
 
 {{/contains}}
 skip_files:
@@ -21,6 +21,6 @@ resources:
 
 automatic_scaling:
   min_num_instances: 1
-  max_num_instances: 1
+  max_num_instances: 3
   cpu_utilization:
     target_utilization: 0.8 # Default is 0.5
