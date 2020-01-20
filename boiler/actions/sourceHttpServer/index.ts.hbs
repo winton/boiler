@@ -1,37 +1,30 @@
 import http, { IncomingMessage, ServerResponse } from "http"
 import { performance } from "perf_hooks"
 
-{{#contains "bigquery" routes}}
-import { BigQuery } from "@google-cloud/bigquery"
-import { BigQueryBuffer } from "bigquery-buffer"
-{{/contains}}
 import pino from "pino"
 
 {{#contains "bigquery" routes}}
+import { BigQuery } from "@google-cloud/bigquery"
+import { BigQueryBuffer } from "bigquery-buffer"
+
 import { BigQueryRoute } from "./routes/bigquery"
 {{/contains}}
 import { OkRoute } from "./routes/ok"
 
 // ✋ Configure routes
-const ROUTES = [BigQueryRoute, OkRoute]
+const ROUTES = { {{#contains "bigquery" routes}}BigQueryRoute, {{/contains}}OkRoute }
 
-{{#contains "bigquery" routes}}
-// ✋ Configure BigQuery
-const DATASET = "datasetName"
-const TABLE = "tableName"
-
-{{/contains}}
 interface Route {
   match: (req: http.IncomingMessage) => boolean
   route: (
     req: http.IncomingMessage,
     res: ServerResponse
-  ) => Promise<void>
+  ) => Promise<number | void>
 }
 
 export class {{class}} {
 {{#contains "bigquery" routes}}
-  buffer: BigQueryBuffer
+  buffers: Record<string, BigQueryBuffer> = {}
 {{/contains}}
   log = pino()
   routes: Route[]
@@ -40,17 +33,24 @@ export class {{class}} {
 
   constructor() {
 {{#contains "bigquery" routes}}
-    if (process.env.GOOGLE_CLOUD_PROJECT) {
-      this.buffer = new BigQueryBuffer(
-        new BigQuery(),
-        DATASET,
-        TABLE
-      )
-    }
+    const bigquery = new BigQuery()
 
 {{/contains}}
-    this.routes = ROUTES.map(R => {
-      return new R(this.log{{#contains "bigquery" routes}}, this.buffer{{/contains}})
+    this.routes = Object.keys(ROUTES).map(key => {
+{{#contains "bigquery" routes}}
+      const dataset = process.env[`${key}Dataset`]
+      const table = process.env[`${key}Table`]
+
+      if (dataset && table) {
+        this.buffers[key] = new BigQueryBuffer(
+          bigquery,
+          dataset,
+          table
+        )
+      }
+
+{{/contains}}
+      return new ROUTES[key](this.log{{#contains "bigquery" routes}}, this.buffers[key]{{/contains}})
     })
 
     this.server = http.createServer(
@@ -71,22 +71,29 @@ export class {{class}} {
   ): Promise<void> {
     const now = performance.now()
 
-    let status: number
+    let status: number | void
 
     if (this.shutdown) {
       status = 503
     } else {
-      status = await this.route(req, res)
+      try {
+        status = await this.route(req, res)
+      } catch (e) {
+        this.log.error(e)
+      }
     }
 
-    res.statusCode = status
-    res.statusMessage = http.STATUS_CODES[res.statusCode]
+    if (status) {
+      res.statusCode = status
+      res.statusMessage = http.STATUS_CODES[res.statusCode]
+    }
 
     const time = performance.now() - now
 
     this.log.info({
-      url: req.url,
       status: res.statusCode,
+      type: res.getHeader("Content-Type"),
+      url: req.url,
       ms: Math.round(time * 1000) / 1000,
     })
 
@@ -96,14 +103,13 @@ export class {{class}} {
   async route(
     req: IncomingMessage,
     res: ServerResponse
-  ): Promise<number> {
+  ): Promise<number | void> {
     for (const route of this.routes) {
       if (route.match(req)) {
-        await route.route(req, res).catch(e => {
+        return await route.route(req, res).catch(e => {
           this.log.error(e)
           return 500
         })
-        return 200
       }
     }
     return 404
@@ -119,32 +125,26 @@ export class {{class}} {
     }
 
     this.server.close(err => {
-{{#contains "bigquery" routes}}
       if (err) {
         this.log.error(err)
       }
 
-      if (this.buffer) {
-        this.buffer
-          .close()
-          .then(() => {
-            process.exit(err ? 1 : 0)
-          })
-          .catch(e => {
-            this.log.error(e)
-            process.exit(1)
-          })
-      } else {
-        process.exit(err ? 1 : 0)
-      }
+{{#contains "bigquery" routes}}
+      const promises = Object.keys(this.buffers).map(key =>
+        this.buffers[key].close()
+      )
+
+      Promise.all(promises)
+        .then(() => {
+          process.exit(err ? 1 : 0)
+        })
+        .catch(e => {
+          this.log.error(e)
+          process.exit(1)
+        })
 {{/contains}}
 {{#excludes "bigquery" routes}}
-      if (err) {
-        this.log.error(err)
-        process.exit(1)
-      }
-
-      process.exit()
+      process.exit(err ? 1 : 0)
 {{/excludes}}
     })
   }

@@ -1,35 +1,46 @@
 import http from "http"
-import url from "url"
+import { parse } from "url"
 
 import { BigQueryBuffer } from "bigquery-buffer"
 import pino from "pino"
 
+// ✋ Configure route
+const ROUTE = "/bq"
+
 export class BigQueryRoute {
   constructor(
-    private log: pino.Logger,
-    private buffer: BigQueryBuffer
+    private log?: pino.Logger,
+    private buffer?: BigQueryBuffer
   ) {}
 
   match(req: http.IncomingMessage): boolean {
-    return req.url.startsWith("/bq.gif?")
+    return req.url.startsWith(ROUTE)
   }
 
   async route(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ): Promise<void> {
-    const { query } = url.parse(req.url, true)
+  ): Promise<number | void> {
+    const { query } = parse(req.url, true)
 
     if (this.buffer) {
       await this.buffer.push(query)
     } else {
-      this.log.info({ "DEV MODE BUFFER PUSH": query })
+      this.log.info(query)
     }
 
-    res.writeHead(204, {
-      "Cache-Control": "private, no-cache, no-store",
-      "Content-Length": 0,
-      "Content-Type": "image/gif",
-    })
+    res.setHeader(
+      "Cache-Control",
+      "private, no-cache, no-store"
+    )
+
+    res.setHeader("Content-Length", 0)
+
+    if (req.url.includes(".gif?")) {
+      res.setHeader("Content-Type", "image/gif")
+    }
+
+    res.statusCode = 204
   }
 }
+
