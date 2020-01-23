@@ -1,7 +1,7 @@
 module.exports = {
-  title: "📂 New project",
+  title: " ∟ 📂 Basic library",
   generators: [
-    "build",
+    "buildTs",
     "eslint",
     "gitInit",
     "ignore",

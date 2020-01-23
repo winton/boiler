@@ -1,7 +1,7 @@
 module.exports = {
   title: " ∟ 📂 HTTP server",
   generators: [
-    "build",
+    "buildTs",
     "eslint",
     "gitInit",
     "ignore",

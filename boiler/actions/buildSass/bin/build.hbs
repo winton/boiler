@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/../"
+
+BUMP=${1:-minor}
+VERSION="$(npx -c 'echo "$npm_package_version"')"
+VERSION_BUMP="$(npx semver -i $BUMP $VERSION)"
+
+rm -rf dist
+npx node-sass src/index.scss dist/index-$VERSION_BUMP.css

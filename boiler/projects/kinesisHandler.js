@@ -1,7 +1,7 @@
 module.exports = {
   title: " ∟ 📂 Kinesis handler",
   generators: [
-    "build",
+    "buildTs",
     "eslint",
     "gitInit",
     "ignore",

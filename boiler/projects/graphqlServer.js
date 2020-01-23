@@ -1,7 +1,7 @@
 module.exports = {
   title: " ∟ 📂 GraphQL server",
   generators: [
-    "build",
+    "buildTs",
     "eslint",
     "gitInit",
     "ignore",

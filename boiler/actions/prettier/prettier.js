@@ -8,8 +8,6 @@ module.exports = [
   {
     type: "addDevPackages",
     packages: [
-      "eslint-config-prettier",
-      "eslint-plugin-prettier",
       "prettier",
     ],
   },
