@@ -1,0 +1,17 @@
+import {
+  APIGatewayProxyEvent,
+  Callback,
+  Context,
+  APIGatewayProxyResult
+} from "aws-lambda"
+
+export function {{lib}}(
+  event: APIGatewayProxyEvent,
+  context: Context,
+  callback: Callback<APIGatewayProxyResult>
+): void {
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Hello World!' }),
+  })
+}
