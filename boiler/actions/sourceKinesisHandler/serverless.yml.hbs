@@ -19,10 +19,10 @@ functions:
   kinesisHandler:
     handler: dist/index.{{lib}}
     environment:
-      createEmailEventUrl: ${self:custom.createEmailEventUrl.${self:provider.stage}}
+      createEmailEventUrl: ${self:custom.createEmailEventUrl.${opt:stage, self:provider.stage}}
     events:
       - stream:
-          arn: arn:aws:kinesis:${self:custom.createEmailEventArn.${self:provider.stage}}
+          arn: arn:aws:kinesis:${self:custom.createEmailEventArn.${opt:stage, self:provider.stage}}
           batchSize: 10
           startingPosition: LATEST
           parallelizationFactor: 10
