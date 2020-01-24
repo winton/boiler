@@ -8,8 +8,8 @@ provider:
   runtime: nodejs10.x
 
 functions:
-  graphql:
-    handler: dist/cjs/index.{{lib}}
+  {{lib}}:
+    handler: dist/index.{{lib}}
     events:
       - http:
           path: /
