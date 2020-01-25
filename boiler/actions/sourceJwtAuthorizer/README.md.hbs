@@ -46,7 +46,8 @@ functions:
           method: post
           authorizer:
             name: {{lib}}
-            arn: 'Fn::ImportValue': {{lib}}Arn
+            arn:
+              "Fn::ImportValue": {{lib}}-0-1-0
             identitySource: method.request.header.Cookie
             type: request
 ```
