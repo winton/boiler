@@ -25,19 +25,17 @@ module.exports = actions.concat([
     packages: [
       "@types/aws-lambda",
       "@types/cookie",
-      "@types/jsonwebtoken",
       "aws-sdk",
       "fs-extra",
+      "jwt-ssm",
       "serverless",
-      "serverless-offline",
-      "ts-node"
+      "serverless-offline"
     ],
   },
   {
     type: "addPackages",
     packages: [
-      "cookie",
-      "jsonwebtoken"
+      "cookie"
     ],
   },
   {
@@ -53,8 +51,8 @@ module.exports = actions.concat([
     scripts: {
       deploy: "npm run release && npx sls deploy",
       offline: "npx sls offline",
-      rotate: "./bin/rotate",
-      token: "./bin/token"
+      rotate: "jwt-ssm rotate",
+      token: "jwt-ssm token"
     }
   }
 ])
