@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "globby": "11.0.0",
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "node-plop": "0.23.0"
   },
   "husky": {
